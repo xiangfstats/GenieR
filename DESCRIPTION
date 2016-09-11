@@ -1,0 +1,14 @@
+Package: genieR
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Authors@R: c(person("Fei", "Xiang", email = "fx216@cam.ac.uk", role = c("aut", "cre")),
+             person("Simon", "Frost", email = "sdwfrost@gmail.com", role = c("aut")))
+Description: More about what it does (maybe more than one line)
+License: What license is it under?
+LazyData: TRUE
+Imports:
+    minqa
+Suggests:
+    ape
+RoxygenNote: 5.0.1

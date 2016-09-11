@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "Package: genieR\nType: Package\nTitle: What the Package Does (Title Case)\nVersion: 0.1.0\nAuthors@R: c(person(\"Fei\", \"Xiang\", email = \"fx216@cam.ac.uk\", role = c(\"aut\", \"cre\")),\n             person(\"Simon\", \"Frost\", email = \"sdwfrost@gmail.com\", role = c(\"aut\")))\nDescription: More about what it does (maybe more than one line)\nLicense: What license is it under?\nLazyData: TRUE\nImports:\n    minqa\nSuggests:\n    ape\nRoxygenNote: 5.0.1\n",
+    "created" : 1473175975079.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1137303254",
+    "id" : "2E362717",
+    "lastKnownWriteTime" : 1473607641,
+    "last_content_update" : 1473607641226,
+    "path" : "~/genieR/DESCRIPTION",
+    "project_path" : "DESCRIPTION",
+    "properties" : {
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "dcf"
+}
