@@ -1,14 +1,14 @@
 {
     "collab_server" : "",
-    "contents" : "^.*\\.Rproj$\n^\\.Rproj\\.user$\n",
+    "contents" : "^.*\\.Rproj$\n^\\.Rproj\\.user$\n^README\\.Rmd$\n^README-.*\\.png$\n",
     "created" : 1473176001776.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2708567950",
+    "hash" : "1538841372",
     "id" : "E8F627D0",
-    "lastKnownWriteTime" : 1473175047,
-    "last_content_update" : 1473175047,
+    "lastKnownWriteTime" : 1474556601,
+    "last_content_update" : 1474556601,
     "path" : "~/genieR/.Rbuildignore",
     "project_path" : ".Rbuildignore",
     "properties" : {

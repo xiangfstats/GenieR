@@ -13,7 +13,10 @@ Geniefit(phy, Model = "user", start, upper, lower)
 
 \item{start}{Initial values for the parameters to be optimized over.}
 
-\item{lower, }{upper Bounds on the variables}
+\item{lower, }{upper Bounds on the variables.}
+}
+\value{
+Parameters estimation of a given model, loglikelihood and AIC
 }
 \description{
 A function to fit coalescent models to a given phylogenetic tree.

@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "---\ntitle: \"Introduction to genieR\"\nauthor: \"Fei Xiangr\"\ndate: \"`r Sys.Date()`\"\noutput: rmarkdown::html_vignette\nvignette: >\n  %\\VignetteIndexEntry{Vignette Title}\n  %\\VignetteEngine{knitr::rmarkdown}\n  %\\VignetteEncoding{UTF-8}\n---\nThis vignette demonstrates the use of the package. An HIV phologenetic tree is included in the package directory. To visualise the tree:\n```{r}\ndata(vill1_lsd)\nlibrary(ape)\nplot(vill1_lsd)\n```\n\nThen we can fit a exponential growth coalescent model for this tree by\n```{r}\nfit1=Geniefit(vill1_chronos,Model=\"expo\",start=c(100,.1),upper=Inf,lower=0).\n```\n\n\nThis package can also simulates coalescent times for isochronous/heterochronous data. \n```{r}\n trajectory<-function(x)  exp(10*x)\n sample1<-cbind(c(9,1,2,1),c(0,.008,.03,.1))\n example_hetero<-coalgen_hetero(sample1, trajectory)\n sample<-c(100,0)\n example_iso<-coalgen_iso(sample, trajectory)\n```\n\nThis package can also extracts coalescent and sampling times from a given phylogenie.\n```{r}\nlibrary(ape)\n t1=rcoal(20)\nheterochronous.gp.stat(t1)\n```\n\n\n\n",
+    "created" : 1475334241819.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "690920481",
+    "id" : "A0C416AA",
+    "lastKnownWriteTime" : 1475334991,
+    "last_content_update" : 1475334991039,
+    "path" : "~/genieR/vignettes/my-vignette.Rmd",
+    "project_path" : "vignettes/my-vignette.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

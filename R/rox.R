@@ -6,7 +6,144 @@
 #########introduce function: branching.sampling.times and heterochronous.gp.stat from###
 ##########https://github.com/sdwfrost/pangea/blob/master/skyride/skyride.Rmd###########
 
+#' Simulate coalescent times for heterochronous data.
+#'
+#' \code{coalgen_hetero} simulates coalescent times for heterochronous data.
+#'
+#' @param sample A two columns matrix of number of individuals and the initial time.
+#' @param trajectory A population growth function.
+#' @param val_upper Upper end of time points to be simulated.
+#'
+#'
+#' @return Coalescent intervals and lineages.
+#'
+#' @references \url{https://github.com/JuliaPalacios/coalsieve}.
+#'
+#'@export
+#'
+#' @examples
+#' sample1<-cbind(c(9,1,2,1),c(0,.008,.03,.1))
+#'
+#' trajectory<-function(x)  exp(10*x)
+#' example_hetero<-coalgen_hetero(sample1, trajectory)
+#'
+#'
+#'
+coalgen_hetero <-function(sample, trajectory,val_upper=10){
+  #'sample = is a matrix with 2 columns. The first column contains the number of samples collected at the time defined in the second column
+  #'trajectory = one over the effective population size function
+  # this works for heterochronous sampling
+  # assumes sample[1,1]>1
+  s=sample[1,2]
+  b<-sample[1,1]
+  n<-sum(sample[,1])-1
+  m<-n
+  nsample<-nrow(sample)
+  sample<-rbind(sample,c(0,10))
+  out<-rep(0,n)
+  branches<-rep(0,n)
+  i<-1
+  while (i<(nsample+1)){
+    if (b==1) {break}
+    if (b<2){
+      b<-b+sample[i+1,1]
+      s<-sample[i+1,2]
+      i<-i+1
+    }
+    x<-rexp(1)
+    f <- function(bran,u,x,s) .5*bran*(bran-1)*integrate(trajectory, s, s+u)$value - x
+    y<-uniroot(f,bran=b,x=x,s=s,lower=0,upper=val_upper)$root
+    while ( (s+y)>sample[i+1,2]) {
+      #     f <- function(bran,u,x,s) .5*bran*(bran-1)*integrate(trajectory, s, s+u)$value - x
+      #     y<-uniroot(f,bran=b,x=x,s=s,lower=0,upper=val_upper)$root
+      x<-x-.5*b*(b-1)*integrate(trajectory,s,sample[i+1,2])$value
+      b<-b+sample[i+1,1]
+      s<-sample[i+1,2]
+      i<-i+1
+      f <- function(bran,u,x,s) .5*bran*(bran-1)*integrate(trajectory, s, s+u)$value - x
+      y<-uniroot(f,bran=b,x=x,s=s,lower=0,upper=val_upper)$root
+      if (i==nsample) {sample[nsample+1,2]<-10*(s+y)}
+    }
 
+    s<-s+y
+    out[m-n+1]<-s
+    branches[m-n+1]<-b
+    n<-n-1
+    b<-b-1
+    if (i==nsample) {sample[nsample+1,2]<-10*(s+y)}
+
+  }
+
+  return(list(branches=c(out[1],diff(out)),lineages=branches))
+}
+
+
+#' Simulate coalescent times for isochronous data.
+#'
+#' \code{coalgen_iso} simulates coalescent times for isochronous data.
+#'
+#' @param sample A two dimensional vector of number of individuals and the initial time.
+#' @param trajectory A population growth function.
+#' @param val_upper Upper end of time points to be simulated.
+#'
+#'
+#' @return Coalescent intervals and lineages.
+#'
+#' @references \url{https://github.com/JuliaPalacios/coalsieve}.
+#'
+#' @export
+#'
+#' @examples
+#' sample<-c(100,0)
+#'
+#' trajectory<-function(x)  exp(10*x)
+#' example_iso<-coalgen_iso(sample, trajectory)
+#'
+coalgen_iso<-function(sample, trajectory,val_upper=10){
+  #'sample = is a matrix with 2 columns. The first column contains the number of samples collected at the time defined in the second column
+  #'trajectory = one over the effective population size function
+  # this works for isochronous sampling
+  s=sample[2]
+  n<-sample[1]
+  out<-rep(0,n-1)
+  #   val_upper<-10*(1/choose(n+1,3))
+  for (j in n:2){
+    t=rexp(1,choose(j,2))
+    #' trajectory is the inverse of the effective population size function
+    f <- function(x,t,s) integrate(trajectory, s, s+x)$value - t
+    #--- I will probably need to catch an error here, for val_upper, it breaks if
+    # val_upper is not large enough
+    #    val_upper<-10
+    y<-uniroot(f,t=t,s=s,lower=0,upper=val_upper)$root
+    s<-s+y
+    out[n-j+1]<-s
+  }
+  return(list(branches=c(out[1],diff(out)),lineages=seq(n,2,-1)))
+
+}
+
+
+
+
+
+#' Extract sampling and coalescent times from a phylogenetic tree.
+#'
+#' \code{branching.sampling.times} extracts sampling and coalescent times from a phylogenetic tree.
+#'
+#' @param phy A phylogenetic tree.
+#'
+#'
+#' @return Sampling times and coalescent times
+#'
+#' @references Palacios JA and Minin VN. Integrated nested Laplace approximation for Bayesian nonparametric phylodynamics, in Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence, 2012.
+#'
+#' @examples
+#' library(ape)
+#' t1=rcoal(20)
+#' branching.sampling.times(t1)
+#'
+#'
+#' @export
 branching.sampling.times <- function(phy){
   phy = new2old.phylo(phy)
   if (class(phy) != "phylo")
@@ -27,6 +164,25 @@ branching.sampling.times <- function(phy){
   branching.sampling.times <- depth - xx
   return(branching.sampling.times)
 }
+
+#' Sort out sampling times, coalescent times and sampling lineages from a phylogenetic tree
+#'
+#' \code{heterochronous.gp.stat} sorts out sampling times, coalescent times and sampling lineages from a phylogenetic tree.
+#'
+#' @param phy A phylogenetic tree.
+#'
+#'
+#' @return Sorted sampling times, coalescent times and sampling lineages.
+#'
+#' @references Palacios JA and Minin VN. Integrated nested Laplace approximation for Bayesian nonparametric phylodynamics, in Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence, 2012.
+#' @examples
+#' library(ape)
+#' t1=rcoal(20)
+#' heterochronous.gp.stat(t1)
+#'
+#' @export
+
+
 
 
 heterochronous.gp.stat <- function(phy){
@@ -50,9 +206,9 @@ heterochronous.gp.stat <- function(phy){
   sampled.lineages = NULL
   for (sample.time in unique.sampling.times){
     sampled.lineages = c(sampled.lineages,
-                         sum(sampling.times == sample.time))  
+                         sum(sampling.times == sample.time))
   }
-  return(list(coal.times=sorted.coal.times, sample.times = unique.sampling.times, sampled.lineages=sampled.lineages))  
+  return(list(coal.times=sorted.coal.times, sample.times = unique.sampling.times, sampled.lineages=sampled.lineages))
 }
 
 
@@ -62,11 +218,13 @@ heterochronous.gp.stat <- function(phy){
 #' @param phy A phylogenetic tree.
 #' @param Model A Model choice from const (constant population size), expo (exponetial growth),expan (expansion growth), log (logistic growth), step (piecewise constant), pexpan (piecewise expansion growth) and plog (piecewise logistic growth).
 #' @param start Initial values for the parameters to be optimized over.
-#' @param lower, upper Bounds on the variables
+#' @param lower, upper Bounds on the variables.
+#' @return Parameters estimation of a given model, loglikelihood and AIC
 #' @examples
 #' library(ape)
 #' t1=rcoal(20)
 #' Geniefit(t1,Model="expo",start=c(100,.1,.1),upper=Inf,lower=0)
+#' @export
 #######one function to produce the fit######
 Geniefit=function(phy,Model="user",start,upper,lower){
   #####wash the data from the tree file#########
@@ -130,7 +288,7 @@ Geniefit=function(phy,Model="user",start,upper,lower){
     logcoe=sort.type[-1]*(log(fnt(sort.times.pop[-1,1]))+log(pop.times[-ntotal]*(pop.times[-ntotal]-1)/2))
     logint=-pop.times[-ntotal]*(pop.times[-ntotal]-1)/2*intfnt(sort.times.pop[-ntotal,1],sort.times.pop[-1,1])
     return(-sum(logcoe)-sum(logint))
-    
+
   }
   fn2 <- function(x){
     fnpar(exp(x))
@@ -139,5 +297,8 @@ Geniefit=function(phy,Model="user",start,upper,lower){
   fit2 <- bobyqa(log(start),fn2,lower=log(lower),upper=log(upper))
   return(list(parr=exp(fit2$par),loglikelihood=-fit2$fval,AIC=2*length(start)+2*fit2$fval))
 }
+
+
+
 
 
