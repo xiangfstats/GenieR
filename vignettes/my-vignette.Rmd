@@ -1,4 +1,4 @@
-----
+---
 title: "Introduction to genieR"
 author: "Fei Xiangr"
 date: "`r Sys.Date()`"
