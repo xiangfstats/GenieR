@@ -7,7 +7,7 @@ genieR is a package for the inference of demographic history from reconstructed 
 
 Installing the package
 ======================
-
+ 
 To install the devel version of the package, type:
 
 ``` r
