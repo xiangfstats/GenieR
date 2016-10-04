@@ -1,6 +1,6 @@
 ---
 title: "Introduction to genieR"
-author: "Fei Xiangr"
+author: "Fei Xiang"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
@@ -8,16 +8,22 @@ vignette: >
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
+
 This vignette demonstrates the use of the package. An HIV phologenetic tree is included in the package directory. To visualise the tree:
+
+```{r message=FALSE}
+library(genieR)
+```
+
 ```{r}
-data(vill1_lsd)
 library(ape)
+data(vill1_lsd)
 plot(vill1_lsd)
 ```
 
 Then we can fit a exponential growth coalescent model for this tree by
 ```{r}
-fit1=Geniefit(vill1_chronos,Model="expo",start=c(100,.1),upper=Inf,lower=0).
+fit1=Geniefit(vill1_lsd,Model="expo",start=c(100,.1),upper=Inf,lower=0)
 ```
 
 
@@ -30,7 +36,7 @@ This package can also simulates coalescent times for isochronous/heterochronous 
  example_iso<-coalgen_iso(sample, trajectory)
 ```
 
-This package can also extracts coalescent and sampling times from a given phylogenie.
+This package can also extracts coalescent and sampling times from a given phylogeny.
 ```{r}
 library(ape)
  t1=rcoal(20)
