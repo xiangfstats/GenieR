@@ -1,19 +1,23 @@
 Package: genieR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Inference of demographic history from phylogeny
 Version: 0.1.0
 Authors@R: c(
              person("Simon", "Frost", role = "aut", email = "sdwfrost@gmail.com"),
-             person("Fei", "Xiang",  role = c("aut", "cre"),email = "fx216@cam.ac.uk"))
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+             person("Fei", "Xiang",  role = c("aut", "cre"),email = "xf3087@gmail.com"))
+Description: This package is for the inference of demographic history from reconstructed molecular phylogenies.
+Repository: CRAN
+Depends: R (>= 3.3.1)
+License: MIT
 LazyData: TRUE
 Imports:
     minqa
 Suggests:
     ape,
     knitr,
-    rmarkdown
+    rmarkdown,
+    testthat
 RoxygenNote: 5.0.1
 VignetteBuilder: knitr
- 
+BugReports: https://github.com/xiangfstats/GenieR/issues
+URL: https://github.com/xiangfstats/GenieR
