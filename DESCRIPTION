@@ -11,7 +11,8 @@ Depends: R (>= 3.3.1)
 License: MIT
 LazyData: TRUE
 Imports:
-    minqa
+    minqa,
+    Rcpp
 Suggests:
     ape,
     knitr,
@@ -21,3 +22,4 @@ RoxygenNote: 5.0.1
 VignetteBuilder: knitr
 BugReports: https://github.com/xiangfstats/GenieR/issues
 URL: https://github.com/xiangfstats/GenieR
+LinkingTo: Rcpp
