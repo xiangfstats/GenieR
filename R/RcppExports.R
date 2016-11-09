@@ -30,3 +30,68 @@ negllc_const <- function(N0, t, A) {
     .Call('genieR_negllc_const', PACKAGE = 'genieR', N0, t, A)
 }
 
+#' Function to calculate the loglikelihood of a expansion coalescent model
+#' @param parr A parameter vector for population size, growth rate and population size at when t is infinity.
+#' @param t A sampling and coalescent time vector.
+#' @param A A lineages vector
+#' @author Fei Xiang (\email{xf3087@@gmail.com})
+#' @return loglikelihood of a expansion coalescent model.
+#' @useDynLib genieR
+#' @importFrom Rcpp sourceCpp
+#' @examples
+#' library(ape)
+#' t1=rcoal(20)
+#' x=att(t1)
+#' negllc_expan(c(1,1,10), x$t, x$A)
+#' library(minqa)
+#' bobyqa(c(1,2,10),negllc_expan,lower=0,upper=Inf,t=x$t,A=x$A)
+#' Geniefit(t1,Model="expan",start=c(10,2,2),upper=Inf,lower=0)
+#' @export
+negllc_expan <- function(parr, t, A) {
+    .Call('genieR_negllc_expan', PACKAGE = 'genieR', parr, t, A)
+}
+
+#' Function to calculate the loglikelihood of a exponential coalescent model
+#' @param parr A parameter vector for population size and growth rate.
+#' @param t A sampling and coalescent time vector.
+#' @param A A lineages vector
+#' @author Fei Xiang (\email{xf3087@@gmail.com})
+#' @return loglikelihood of a exponential coalescent model.
+#' @useDynLib genieR
+#' @importFrom Rcpp sourceCpp
+#' @examples
+#' library(ape)
+#' t1=rcoal(20)
+#' x=att(t1)
+#' negllc_expo(c(1,1), x$t, x$A)
+#' library(minqa)
+#' bobyqa(c(1,2),negllc_expo,lower=0,upper=Inf,t=x$t,A=x$A)
+#' Geniefit(t1,Model="expo",start=c(10,2),upper=Inf,lower=0)
+#' @export
+negllc_expo <- function(parr, t, A) {
+    .Call('genieR_negllc_expo', PACKAGE = 'genieR', parr, t, A)
+}
+
+#' Function to calculate the logistic of a logistic coalescent model
+#' @param parr A parameter vector for population size, growth rate and logistic shape parameter.
+#' @param t A sampling and coalescent time vector.
+#' @param A A lineages vector
+#' @author Fei Xiang (\email{xf3087@@gmail.com})
+#' @return loglikelihood of a logistic coalescent model.
+#' @useDynLib genieR
+#' @importFrom Rcpp sourceCpp
+#' @examples
+#' library(ape)
+#' t1=rcoal(20)
+#' x=att(t1)
+#' negllc_log(c(1,1,10), x$t, x$A)
+#' library(minqa)
+#' bobyqa(c(1,2,10),negllc_log,lower=0,upper=Inf,t=x$t,A=x$A)
+#' Geniefit(t1,Model="log",start=c(10,2,2),upper=Inf,lower=0)
+#' library(dfoptim)
+#' nmkb(c(1,2,10),negllc_log,lower=0,upper=Inf,t=x$t,A=x$A)
+#' @export
+negllc_log <- function(parr, t, A) {
+    .Call('genieR_negllc_log', PACKAGE = 'genieR', parr, t, A)
+}
+
