@@ -7,7 +7,7 @@ Authors@R: c(
              person("Fei", "Xiang",  role = c("aut", "cre"),email = "xf3087@gmail.com"))
 Description: This package is for the inference of demographic history from reconstructed molecular phylogenies.
 Repository: CRAN
-Depends: R (>= 3.3.1)
+Depends: R (>= 3.3.0)
 License: MIT
 LazyData: TRUE
 Imports:
