@@ -17,7 +17,7 @@ using namespace Rcpp;
 //' negllc_log(c(1,1,10), x$t, x$A)
 //' library(minqa)
 //' bobyqa(c(1,2,10),negllc_log,lower=0,upper=Inf,t=x$t,A=x$A)
-//' Geniefit(t1,Model="log",start=c(10,2,2),upper=Inf,lower=0)
+//' Geniefit(t1,Model="log",start=c(10,20,20),upper=Inf,lower=0)
 //' library(dfoptim)
 //' nmkb(c(1,2,10),negllc_log,lower=0,upper=Inf,t=x$t,A=x$A)
 //' @export
