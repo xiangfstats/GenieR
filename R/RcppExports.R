@@ -87,11 +87,80 @@ negllc_expo <- function(parr, t, A) {
 #' negllc_log(c(1,1,10), x$t, x$A)
 #' library(minqa)
 #' bobyqa(c(1,2,10),negllc_log,lower=0,upper=Inf,t=x$t,A=x$A)
-#' Geniefit(t1,Model="log",start=c(10,2,2),upper=Inf,lower=0)
+#' Geniefit(t1,Model="log",start=c(10,20,20),upper=Inf,lower=0)
 #' library(dfoptim)
 #' nmkb(c(1,2,10),negllc_log,lower=0,upper=Inf,t=x$t,A=x$A)
 #' @export
 negllc_log <- function(parr, t, A) {
     .Call('genieR_negllc_log', PACKAGE = 'genieR', parr, t, A)
+}
+
+#' Function to calculate the loglikelihood of a piecewise expansion coalescent model
+#' @param parr A parameter vector for population size, exponential growth rate and propotion to population size prior to change.
+#' @param t A sampling and coalescent time vector.
+#' @param A A lineages vector
+#' @author Fei Xiang (\email{xf3087@@gmail.com})
+#' @return loglikelihood of a piecewise expansion coalescent model.
+#' @useDynLib genieR
+#' @importFrom Rcpp sourceCpp
+#' @examples
+#' library(ape)
+#' t1=rcoal(20)
+#' x=att(t1)
+#' negllc_pexpan(c(1,1,.1), x$t, x$A)
+#' library(minqa)
+#' bobyqa(c(1,2,1),negllc_pexpan,lower=0,upper=Inf,t=x$t,A=x$A)
+#' Geniefit(t1,Model="pexpan",start=c(10,2,1),upper=Inf,lower=0)
+#' library(dfoptim)
+#' nmkb(c(1,2,10),negllc_pexpan,lower=0,upper=Inf,t=x$t,A=x$A)
+#' @export
+negllc_pexpan <- function(parr, t, A) {
+    .Call('genieR_negllc_pexpan', PACKAGE = 'genieR', parr, t, A)
+}
+
+#' Function to calculate the loglikelihood of a piecewise logistic coalescent model
+#' @param parr A parameter vector for population size, exponential growth rate and change time.
+#' @param t A sampling and coalescent time vector.
+#' @param A A lineages vector
+#' @author Fei Xiang (\email{xf3087@@gmail.com})
+#' @return loglikelihood of a piecewise logistic coalescent model.
+#' @useDynLib genieR
+#' @importFrom Rcpp sourceCpp
+#' @examples
+#' library(ape)
+#' t1=rcoal(20)
+#' x=att(t1)
+#' negllc_plog(c(1,1,.1), x$t, x$A)
+#' library(minqa)
+#' bobyqa(c(1,2,1),negllc_plog,lower=0,upper=Inf,t=x$t,A=x$A)
+#' Geniefit(t1,Model="plog",start=c(10,2,1),upper=Inf,lower=0)
+#' library(dfoptim)
+#' nmkb(c(1,2,10),negllc_plog,lower=0,upper=Inf,t=x$t,A=x$A)
+#' @export
+negllc_plog <- function(parr, t, A) {
+    .Call('genieR_negllc_plog', PACKAGE = 'genieR', parr, t, A)
+}
+
+#' Function to calculate the loglikelihood of a step coalescent model
+#' @param parr A parameter vector for population size ,change time and propotion to population size prior to change.
+#' @param t A sampling and coalescent time vector.
+#' @param A A lineages vector
+#' @author Fei Xiang (\email{xf3087@@gmail.com})
+#' @return loglikelihood of a exponential coalescent model.
+#' @useDynLib genieR
+#' @importFrom Rcpp sourceCpp
+#' @examples
+#' library(ape)
+#' t1=rcoal(20)
+#' x=att(t1)
+#' negllc_step(c(1,1,.1), x$t, x$A)
+#' library(minqa)
+#' bobyqa(c(1,2,1),negllc_step,lower=0,upper=Inf,t=x$t,A=x$A)
+#' Geniefit(t1,Model="step",start=c(10,2,1),upper=Inf,lower=0)
+#' library(dfoptim)
+#' nmkb(c(1,2,10),negllc_step,lower=0,upper=Inf,t=x$t,A=x$A)
+#' @export
+negllc_step <- function(parr, t, A) {
+    .Call('genieR_negllc_step', PACKAGE = 'genieR', parr, t, A)
 }
 
