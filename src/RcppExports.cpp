@@ -70,3 +70,42 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// negllc_pexpan
+double negllc_pexpan(NumericVector parr, NumericVector t, NumericVector A);
+RcppExport SEXP genieR_negllc_pexpan(SEXP parrSEXP, SEXP tSEXP, SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type parr(parrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(negllc_pexpan(parr, t, A));
+    return rcpp_result_gen;
+END_RCPP
+}
+// negllc_plog
+double negllc_plog(NumericVector parr, NumericVector t, NumericVector A);
+RcppExport SEXP genieR_negllc_plog(SEXP parrSEXP, SEXP tSEXP, SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type parr(parrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(negllc_plog(parr, t, A));
+    return rcpp_result_gen;
+END_RCPP
+}
+// negllc_step
+double negllc_step(NumericVector parr, NumericVector t, NumericVector A);
+RcppExport SEXP genieR_negllc_step(SEXP parrSEXP, SEXP tSEXP, SEXP ASEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type parr(parrSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type t(tSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type A(ASEXP);
+    rcpp_result_gen = Rcpp::wrap(negllc_step(parr, t, A));
+    return rcpp_result_gen;
+END_RCPP
+}
