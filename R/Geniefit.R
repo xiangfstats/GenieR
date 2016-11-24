@@ -7,7 +7,7 @@
 #' @examples
 #' library(ape)
 #' t1=rcoal(20)
-#' Geniefit(t1,Model="expo",start=c(100,.1,.1),upper=Inf,lower=0)
+#' Geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0)
 #'
 #' @author Fei Xiang (\email{xf3087@@gmail.com})
 #'
@@ -17,7 +17,17 @@
 #'
 #'
 #######one function to produce the fit######
-Geniefit=function(phy,Model="user",start,upper,lower){
+#Geniefit=function(phy,Model="user",start,upper,lower,Rcpp=F,MCMC=F){
+###the optimisation by bobyqa####
+#fn2 <- function(x) fntreeloglik(phy,para= exp(x),Model)
+#require(minqa)
+#fit2 <- bobyqa(log(start),fn2,lower=log(lower),upper=log(upper))
+
+#return(list(parr=exp(fit2$par),loglikelihood=-fit2$fval,AIC=2*length(start)+2*fit2$fval))
+#}
+
+
+Geniefit=function(phy,Model="user",start,upper,lower,Rcpp=F,MCMC=F){
   #####wash the data from the tree file#########
   phy.times=heterochronous.gp.stat (phy)
   ##################times frame given the coalesent events#############
@@ -42,13 +52,6 @@ Geniefit=function(phy,Model="user",start,upper,lower){
   sort.type=type[order(times.pop[,1])]
   ntotal=length(sort.type)
   #####if statement to get rid of first event when it is sampling event##########
-  if (pop.times[1]<2) {
-    pop.times=pop.times[-1]
-    sort.times.pop=sort.times.pop[-1,]
-    sort.times.pop[,1]=sort.times.pop[,1]-sort.times.pop[1,1]
-    ntotal=ntotal-1
-    sort.type=sort.type[-1]
-  }
   ######population trajectory function#########
   fnpar=function(parr){
     ####function of t for population trajectory#####
@@ -59,6 +62,7 @@ Geniefit=function(phy,Model="user",start,upper,lower){
       if (Model=="log")   {trajectory=parr[1]*((1+parr[3])/(1+parr[3]*exp(parr[2]*t)))}
       if (Model=="step")  {trajectory=ifelse(t<parr[3],parr[1],parr[1]*parr[2])}
       if (Model=="pexpan") {trajectory=ifelse(t<-log(parr[3])/parr[2],parr[1]*exp(-parr[2]*t),parr[1]*parr[3])}
+      if (Model=="plog") {trajectory=ifelse(t<parr[3],parr[1],parr[1]*exp(-parr[2]*(t-parr[3])))}
       return(1/trajectory)
     }
     ######define the integral explicit function given fnt###########
@@ -74,18 +78,43 @@ Geniefit=function(phy,Model="user",start,upper,lower){
         intg=(upperlim< -log(parr[3])/parr[2])*1/parr[1]/parr[2]*(exp(parr[2]*upperlim)-exp(parr[2]*lowerlim))+(lowerlim>-log(parr[3])/parr[2])*1/parr[1]/parr[3]*(upperlim-lowerlim)+(lowerlim< -log(parr[3])/parr[2] && -log(parr[3])/parr[2]<upperlim)*(1/parr[1]/parr[3]*(upperlim+log(parr[3])/parr[2])+1/parr[1]/parr[2]*(exp(parr[2]*
                                                                                                                                                                                                                                                                                                                                       -log(parr[3])/parr[2])-exp(parr[2]*lowerlim)))
       }
+      if (Model=="plog"){
+        intg=(upperlim<parr[3])*(upperlim-lowerlim)/parr[1]+(lowerlim>parr[3])*(-exp(parr[2]*lowerlim-parr[2]*parr[3])+exp(parr[2]*upperlim-parr[2]*parr[3]))/parr[1]/parr[2]+(lowerlim<parr[3] && upperlim>parr[3])*((upperlim-parr[3])/parr[1]+(-exp(parr[2]*lowerlim-parr[2]*parr[3])+1)/parr[1]/parr[2])
+      }
       return(intg)
     }
     logcoe=sort.type[-1]*(log(fnt(sort.times.pop[-1,1]))+log(pop.times[-ntotal]*(pop.times[-ntotal]-1)/2))
+    logcoe[which(sort.type[-1]==0)]=0
     logint=-pop.times[-ntotal]*(pop.times[-ntotal]-1)/2*intfnt(sort.times.pop[-ntotal,1],sort.times.pop[-1,1])
     return(-sum(logcoe)-sum(logint))
 
   }
+
+  if (Rcpp==F){
   fn2 <- function(x){
     fnpar(exp(x))
   }
   require(minqa)
   fit2 <- bobyqa(log(start),fn2,lower=log(lower),upper=log(upper))
   return(list(parr=exp(fit2$par),loglikelihood=-fit2$fval,AIC=2*length(start)+2*fit2$fval))
+  }
+
+
+  if (Rcpp==T){
+    require(dfoptim)
+  x=att(phy)
+  if (Model=="expo")   fit.c=nmkb(start,negllc_expo,t=x$t,A=x$A,upper = upper,lower = lower)
+  if (Model=="pexpan") fit.c=nmkb(start,negllc_pexpan,t=x$t,A=x$A,upper = upper,lower = lower)
+  if (Model=="log")    fit.c=nmkb(start,negllc_log,t=x$t,A=x$A,upper = upper,lower = lower)
+  if (Model=="step")   fit.c=nmkb(start,negllc_step,t=x$t,A=x$A,upper = upper,lower = lower)
+  if (Model=="expan")  fit.c=nmkb(start,negllc_expan,t=x$t,A=x$A,upper = upper,lower = lower)
+  if (Model=="plog")   fit.c=nmkb(start,negllc_plog,t=x$t,A=x$A,upper = upper,lower = lower)
+  return(list(parr=fit.c$par,loglikelihood=-fit.c$value,AIC=2*length(start)+2*fit.c$value))
+  }
+
+
+
 }
+
+
 
