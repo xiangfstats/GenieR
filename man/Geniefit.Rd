@@ -4,7 +4,7 @@
 \alias{Geniefit}
 \title{A function to fit coalescent models to a given phylogenetic tree.}
 \usage{
-Geniefit(phy, Model = "user", start, upper, lower)
+Geniefit(phy, Model = "user", start, upper, lower, Rcpp = F, MCMC = F)
 }
 \arguments{
 \item{phy}{A phylogenetic tree.}
@@ -24,7 +24,7 @@ A function to fit coalescent models to a given phylogenetic tree.
 \examples{
 library(ape)
 t1=rcoal(20)
-Geniefit(t1,Model="expo",start=c(100,.1,.1),upper=Inf,lower=0)
+Geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0)
 
 }
 \author{
