@@ -36,7 +36,7 @@ double negllc_const(double N0, NumericVector t, NumericVector A){
       ll = ll -ch*intval;
     }
   }
-  return(-ll);
+  return(ll);
 }
 
 
