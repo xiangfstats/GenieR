@@ -22,10 +22,9 @@ log likelihood of a phylogeny given a coalescent model and parameters.
 A function to calculate the log likelihood.
 }
 \examples{
-library(ape)
-t1=rcoal(20)
-
-
+data(village)
+system.time(loglik(village,c(100,1),Model="expo",Rcpp=T))
+system.time(loglik(village,c(100,1),Model="expo",Rcpp=F))
 }
 \author{
 Fei Xiang (\email{xf3087@gmail.com})
