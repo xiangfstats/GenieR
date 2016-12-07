@@ -91,10 +91,9 @@ fntreeloglik=function(phy,para,Model){
 #' @param Rcpp Calculation is based on C++ code when it is True and on R code when it is False.
 #' @return log likelihood of a phylogeny given a coalescent model and parameters.
 #' @examples
-#' library(ape)
-#' t1=rcoal(20)
-#'
-#'
+#' data(village)
+#' system.time(loglik(village,c(100,1),Model="expo",Rcpp=T))
+#' system.time(loglik(village,c(100,1),Model="expo",Rcpp=F))
 #' @author Fei Xiang (\email{xf3087@@gmail.com})
 #'
 #' @export
