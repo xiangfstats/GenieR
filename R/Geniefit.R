@@ -3,12 +3,19 @@
 #' @param Model A Model choice from const (constant population size), expo (exponetial growth),expan (expansion growth), log (logistic growth), step (piecewise constant), pexpan (piecewise expansion growth) and plog (piecewise logistic growth).
 #' @param start Initial values for the parameters to be optimized over.
 #' @param lower, upper Bounds on the variables.
+#' @param Rcpp Calculation is based on C++ code when it is True and on R code when it is False.
+#' @param MCMC MCMC simulation is run when it is true, and not run when it is False. The default prior is uniform given the lower and upper.
+#' @param sig MCMC simulation step size.
+#' @param run Number of MCMC simulation.
 #' @return Parameters estimation of a given model, loglikelihood and AIC
 #' @examples
 #' library(ape)
 #' t1=rcoal(20)
 #' Geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0)
-#'
+#' Geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0,Rcpp=T)
+#' ###a MCMC simulation included##
+#' f=Geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0,MCMC=T,sig=.1,run=10000)
+#' acf(f$MCMC.simulation)
 #' @author Fei Xiang (\email{xf3087@@gmail.com})
 #'
 #' @export
@@ -16,18 +23,10 @@
 #'
 #'
 #'
-#######one function to produce the fit######
-#Geniefit=function(phy,Model="user",start,upper,lower,Rcpp=F,MCMC=F){
-###the optimisation by bobyqa####
-#fn2 <- function(x) fntreeloglik(phy,para= exp(x),Model)
-#require(minqa)
-#fit2 <- bobyqa(log(start),fn2,lower=log(lower),upper=log(upper))
-
-#return(list(parr=exp(fit2$par),loglikelihood=-fit2$fval,AIC=2*length(start)+2*fit2$fval))
-#}
 
 
-Geniefit=function(phy,Model="user",start,upper,lower,Rcpp=F,MCMC=F){
+
+Geniefit=function(phy,Model,start,upper,lower,Rcpp=F,MCMC=F,sig=.1,run=10000){
   #####wash the data from the tree file#########
   phy.times=heterochronous.gp.stat (phy)
   ##################times frame given the coalesent events#############
@@ -96,20 +95,36 @@ Geniefit=function(phy,Model="user",start,upper,lower,Rcpp=F,MCMC=F){
   }
   require(minqa)
   fit2 <- bobyqa(log(start),fn2,lower=log(lower),upper=log(upper))
-  return(list(parr=exp(fit2$par),loglikelihood=-fit2$fval,AIC=2*length(start)+2*fit2$fval))
+  if (MCMC==T){
+    mcmcsim=MCMCupdates(phy=phy,Model=Model,start=start,lower=lower,upper=upper,sig=sig,run=run)
+    return(list(parr=exp(fit2$par),loglikelihood=-fit2$fval,AIC=2*length(start)+2*fit2$fval,MCMC.simulation=mcmcsim))
+  } else{
+    return(list(parr=exp(fit2$par),loglikelihood=-fit2$fval,AIC=2*length(start)+2*fit2$fval))
+  }
+
   }
 
 
   if (Rcpp==T){
     require(dfoptim)
   x=att(phy)
+  if (Model=="const")  fit.c=bobyqa(start,negllc_const,lower=lower,upper=upper,t=x$t,A=x$A)
   if (Model=="expo")   fit.c=nmkb(start,negllc_expo,t=x$t,A=x$A,upper = upper,lower = lower)
   if (Model=="pexpan") fit.c=nmkb(start,negllc_pexpan,t=x$t,A=x$A,upper = upper,lower = lower)
   if (Model=="log")    fit.c=nmkb(start,negllc_log,t=x$t,A=x$A,upper = upper,lower = lower)
   if (Model=="step")   fit.c=nmkb(start,negllc_step,t=x$t,A=x$A,upper = upper,lower = lower)
   if (Model=="expan")  fit.c=nmkb(start,negllc_expan,t=x$t,A=x$A,upper = upper,lower = lower)
   if (Model=="plog")   fit.c=nmkb(start,negllc_plog,t=x$t,A=x$A,upper = upper,lower = lower)
-  return(list(parr=fit.c$par,loglikelihood=-fit.c$value,AIC=2*length(start)+2*fit.c$value))
+
+  if (MCMC==T){
+    mcmcsim=MCMCupdates(phy=phy,Model=Model,start=start,lower=lower,upper=upper,sig=sig,run=run)
+    return(list(parr=fit.c$par,loglikelihood=ifelse(Model=="const",-fit.c$fval,-fit.c$value),AIC=2*length(start)-2*ifelse(Model=="const",-fit.c$fval,-fit.c$value),MCMC.simulation=mcmcsim))
+  } else{
+    return(list(parr=fit.c$par,loglikelihood=ifelse(Model=="const",-fit.c$fval,-fit.c$value),AIC=2*length(start)-2*ifelse(Model=="const",-fit.c$fval,-fit.c$value)))
+  }
+
+
+
   }
 
 
