@@ -84,7 +84,7 @@ fntreeloglik=function(phy,para,Model){
   loglik=sum(logcoe+logint)
   return(-loglik)
 }
-#' A function to calculate the log likelihood.
+#' A function to calculate the log likelihood of a phylogenetic tree given various coalescent models.
 #' @param phy A phylogenetic tree.
 #' @param Model A Model choice from const (constant population size), expo (exponetial growth),expan (expansion growth), log (logistic growth), step (piecewise constant), pexpan (piecewise expansion growth) and plog (piecewise logistic growth).
 #' @param parr Parameters.

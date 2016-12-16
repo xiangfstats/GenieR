@@ -1,6 +1,24 @@
 #'Sort out sampling times, coalescent times and sampling lineages from a phylogenetic tree
 #'
-#' @export
+##' \code{att} sorts out sampling times, coalescent times and sampling lineages from a phylogenetic tree.
+##'
+##' @param phy A phylogenetic tree.
+##' @param eps Difference parameter to separate coalescent and sampling event.
+##'
+##' @return Sorted sampling times, coalescent times and sampling lineages.
+##'
+##' @references Palacios JA and Minin VN. Integrated nested Laplace approximation for Bayesian nonparametric phylodynamics, in Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence, 2012.
+##' @examples
+##' library(ape)
+##' t1=rcoal(20)
+##' att(t1)
+##'
+##'
+##' @author Simon Frost (\email{sdwfrost@@gmail.com})
+##'
+##'
+##' @export
+
 
 att <- function(phy,eps=1e-6){
   b.s.times = branching.sampling.times(phy)

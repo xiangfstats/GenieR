@@ -32,7 +32,7 @@ coalgen_iso<-function(sample, trajectory,val_upper=10){
   #   val_upper<-10*(1/choose(n+1,3))
   for (j in n:2){
     t=rexp(1,choose(j,2))
-    #' trajectory is the inverse of the effective population size function
+    # trajectory is the inverse of the effective population size function
     f <- function(x,t,s) integrate(trajectory, s, s+x)$value - t
     #--- I will probably need to catch an error here, for val_upper, it breaks if
     # val_upper is not large enough

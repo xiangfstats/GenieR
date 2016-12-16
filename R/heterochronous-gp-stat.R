@@ -1,23 +1,4 @@
-#' Sort out sampling times, coalescent times and sampling lineages from a phylogenetic tree
-#'
-#' \code{heterochronous.gp.stat} sorts out sampling times, coalescent times and sampling lineages from a phylogenetic tree.
-#'
-#' @param phy A phylogenetic tree.
-#'
-#'
-#' @return Sorted sampling times, coalescent times and sampling lineages.
-#'
-#' @references Palacios JA and Minin VN. Integrated nested Laplace approximation for Bayesian nonparametric phylodynamics, in Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence, 2012.
-#' @examples
-#' library(ape)
-#' t1=rcoal(20)
-#' heterochronous.gp.stat(t1)
-#'
-#'
-#' @author Simon Frost (\email{sdwfrost@@gmail.com})
-#'
-#'
-#' @export
+
 
 
 
