@@ -28,9 +28,6 @@ example_iso<-coalgen_iso(sample, trajectory)
 }
 \author{
 Fei Xiang (\email{xf3087@gmail.com})
-
-
-trajectory is the inverse of the effective population size function
 }
 \references{
 \url{https://github.com/JuliaPalacios/coalsieve}.

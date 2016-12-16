@@ -2,7 +2,7 @@
 % Please edit documentation in R/loglik.R
 \name{loglik}
 \alias{loglik}
-\title{A function to calculate the log likelihood.}
+\title{A function to calculate the log likelihood of a phylogenetic tree given various coalescent models.}
 \usage{
 loglik(phy, parr, Model, Rcpp = F)
 }
@@ -19,7 +19,7 @@ loglik(phy, parr, Model, Rcpp = F)
 log likelihood of a phylogeny given a coalescent model and parameters.
 }
 \description{
-A function to calculate the log likelihood.
+A function to calculate the log likelihood of a phylogenetic tree given various coalescent models.
 }
 \examples{
 data(village)

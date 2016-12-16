@@ -6,7 +6,28 @@
 \usage{
 att(phy, eps = 1e-06)
 }
+\arguments{
+\item{phy}{A phylogenetic tree.}
+
+\item{eps}{Difference parameter to separate coalescent and sampling event.}
+}
+\value{
+Sorted sampling times, coalescent times and sampling lineages.
+}
 \description{
-Sort out sampling times, coalescent times and sampling lineages from a phylogenetic tree
+\code{att} sorts out sampling times, coalescent times and sampling lineages from a phylogenetic tree.
+}
+\examples{
+library(ape)
+t1=rcoal(20)
+att(t1)
+
+
+}
+\author{
+Simon Frost (\email{sdwfrost@gmail.com})
+}
+\references{
+Palacios JA and Minin VN. Integrated nested Laplace approximation for Bayesian nonparametric phylodynamics, in Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence, 2012.
 }
 
