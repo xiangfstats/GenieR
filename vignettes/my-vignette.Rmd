@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-This vignette demonstrates the use of the package. An HIV phologenetic tree is included in the package directory. To visualise the tree:
+This vignette demonstrates the use of the package. An HIV phylogenetic tree is included in the package directory. To visualise the tree:
 
 ```{r message=FALSE}
 library(genieR)
@@ -17,13 +17,14 @@ library(genieR)
 
 ```{r}
 library(ape)
-data(vill1_lsd)
-plot(vill1_lsd)
+data(village)
+plot(village,show.tip.label = F,edge.color = sample(colors(), length(village$edge)/2,replace=T))
+title("A phylogenetic tree with random colors")
 ```
 
 Then we can fit a exponential growth coalescent model for this tree by
 ```{r}
-fit1=Geniefit(vill1_lsd,Model="expo",start=c(100,.1),upper=Inf,lower=0)
+fit1=Geniefit(village,Model="expo",start=c(100,.1),upper=Inf,lower=0)
 ```
 
 
@@ -40,7 +41,6 @@ This package can also extracts coalescent and sampling times from a given phylog
 ```{r}
 library(ape)
  t1=rcoal(20)
-heterochronous.gp.stat(t1)
 ```
 
 
