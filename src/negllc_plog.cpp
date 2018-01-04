@@ -30,7 +30,7 @@ double negllc_plog(NumericVector parr, NumericVector t, NumericVector A){
   double N0=parr[0];
   double r=parr[1];
   double x=parr[2];
-  double dt, intval, integrand;
+  double intval, integrand;
   int a, ch;
 
   // Main loop
