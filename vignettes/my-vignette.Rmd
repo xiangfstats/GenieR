@@ -30,11 +30,11 @@ tail(x)
 ```
 The first column of x is the times and the second column of x is the count of current samples, which increases by one representing a sampling events and decreases by one representing a coalescent event. To see the times of coalescents,
 ```{r}
-which(diff(x[,2])==-1)
+x$t[diff(x[,2])==-1]
 ```
 and the times of sampling,
 ```{r}
-which(diff(x[,2])==1)
+x$t[diff(x[,2])==1]
 ```
 
 A simpler way of extract sampling and coalescents times is through function 
