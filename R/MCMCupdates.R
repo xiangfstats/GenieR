@@ -1,3 +1,6 @@
+parnames=c("parr1","parr2","parr3","parr4","parr5")
+
+
 ######MCMC updates for constant model based on negllc_const#####
 MCMC_const=function(phy,start,lower,upper,sig=.1,run){
   ##initial set up##
@@ -28,6 +31,7 @@ MCMC_const=function(phy,start,lower,upper,sig=.1,run){
     }
 
   cat(c("MCMC acceptance rates are", Acc/run))
+  colnames(y)=c(parnames[length(start)],"loglik")
 return(output)
 
 }
@@ -89,6 +93,7 @@ output[i,]=c(n,r,lik)
 
   }
   cat(c("MCMC acceptance rates are", Acc/run))
+  colnames(y)=c(parnames[length(start)],"loglik")
   return(output)
 }
 
@@ -168,6 +173,7 @@ MCMC_expan=function(phy,start,lower,upper,sig,run){
 
   }
   cat(c("MCMC acceptance rates are", Acc/run))
+  colnames(y)=c(parnames[length(start)],"loglik")
   return(output)
 }
 
@@ -248,6 +254,7 @@ MCMC_log=function(phy,start,lower,upper,sig,run){
 
   }
   cat(c("MCMC acceptance rates are", Acc/run))
+  colnames(y)=c(parnames[length(start)],"loglik")
   return(output)
 }
 
@@ -328,6 +335,7 @@ MCMC_step=function(phy,start,lower,upper,sig,run){
 
   }
   cat(c("MCMC acceptance rates are", Acc/run))
+  colnames(y)=c(parnames[length(start)],"loglik")
   return(output)
 }
 ######MCMC updates for piecewise expansion model based on negllc_pexpan####
@@ -406,6 +414,7 @@ MCMC_pexpan=function(phy,start,lower,upper,sig,run){
 
   }
   cat(c("MCMC acceptance rates are", Acc/run))
+  colnames(y)=c(parnames[length(start)],"loglik")
   return(output)
 }
 
@@ -487,6 +496,7 @@ MCMC_plog=function(phy,start,lower,upper,sig,run){
 
   }
   cat(c("MCMC acceptance rates are", Acc/run))
+  colnames(y)=c(parnames[length(start)],"loglik")
   return(output)
 }
 
