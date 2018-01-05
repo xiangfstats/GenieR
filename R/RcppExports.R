@@ -16,7 +16,7 @@
 #' negllc_const(1, x$t, x$A)
 #' @export
 negllc_const <- function(N0, t, A) {
-    .Call('genieR_negllc_const', PACKAGE = 'genieR', N0, t, A)
+    .Call('_genieR_negllc_const', PACKAGE = 'genieR', N0, t, A)
 }
 
 #' Function to calculate the loglikelihood of a expansion coalescent model
@@ -37,7 +37,7 @@ negllc_const <- function(N0, t, A) {
 #' Geniefit(t1,Model="expan",start=c(10,2,2),upper=Inf,lower=0)
 #' @export
 negllc_expan <- function(parr, t, A) {
-    .Call('genieR_negllc_expan', PACKAGE = 'genieR', parr, t, A)
+    .Call('_genieR_negllc_expan', PACKAGE = 'genieR', parr, t, A)
 }
 
 #' Function to calculate the loglikelihood of a exponential coalescent model
@@ -58,7 +58,7 @@ negllc_expan <- function(parr, t, A) {
 #' Geniefit(t1,Model="expo",start=c(10,2),upper=Inf,lower=0)
 #' @export
 negllc_expo <- function(parr, t, A) {
-    .Call('genieR_negllc_expo', PACKAGE = 'genieR', parr, t, A)
+    .Call('_genieR_negllc_expo', PACKAGE = 'genieR', parr, t, A)
 }
 
 #' Function to calculate the logistic of a logistic coalescent model
@@ -81,7 +81,7 @@ negllc_expo <- function(parr, t, A) {
 #' nmkb(c(1,2,10),negllc_log,lower=0,upper=Inf,t=x$t,A=x$A)
 #' @export
 negllc_log <- function(parr, t, A) {
-    .Call('genieR_negllc_log', PACKAGE = 'genieR', parr, t, A)
+    .Call('_genieR_negllc_log', PACKAGE = 'genieR', parr, t, A)
 }
 
 #' Function to calculate the loglikelihood of a piecewise expansion coalescent model
@@ -104,7 +104,7 @@ negllc_log <- function(parr, t, A) {
 #' nmkb(c(1,2,10),negllc_pexpan,lower=0,upper=Inf,t=x$t,A=x$A)
 #' @export
 negllc_pexpan <- function(parr, t, A) {
-    .Call('genieR_negllc_pexpan', PACKAGE = 'genieR', parr, t, A)
+    .Call('_genieR_negllc_pexpan', PACKAGE = 'genieR', parr, t, A)
 }
 
 #' Function to calculate the loglikelihood of a piecewise logistic coalescent model
@@ -127,7 +127,7 @@ negllc_pexpan <- function(parr, t, A) {
 #' nmkb(c(1,2,10),negllc_plog,lower=0,upper=Inf,t=x$t,A=x$A)
 #' @export
 negllc_plog <- function(parr, t, A) {
-    .Call('genieR_negllc_plog', PACKAGE = 'genieR', parr, t, A)
+    .Call('_genieR_negllc_plog', PACKAGE = 'genieR', parr, t, A)
 }
 
 #' Function to calculate the loglikelihood of a step coalescent model
@@ -150,6 +150,6 @@ negllc_plog <- function(parr, t, A) {
 #' nmkb(c(1,2,10),negllc_step,lower=0,upper=Inf,t=x$t,A=x$A)
 #' @export
 negllc_step <- function(parr, t, A) {
-    .Call('genieR_negllc_step', PACKAGE = 'genieR', parr, t, A)
+    .Call('_genieR_negllc_step', PACKAGE = 'genieR', parr, t, A)
 }
 

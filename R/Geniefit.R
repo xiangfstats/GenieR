@@ -27,6 +27,32 @@
 
 
 Geniefit=function(phy,Model,start,upper,lower,Rcpp=F,MCMC=F,sig=.1,run=10000){
+  ###
+
+  ###stops if number of parameters are not correct according to Model
+  if (Model=="const") {
+    if (length(start)!=1)  stop(paste("length of start must be 1 under a constant model", "\n", ""))
+    }
+  if (Model=="expo")  {
+    if (length(start)!=2)  stop(paste("length of start must be 2 under an exponential model", "\n", ""))
+    }
+  if (Model=="expan") {
+    if (length(start)!=3)  stop(paste("length of start must be 3 under an expansion model", "\n", ""))
+    }
+  if (Model=="log")   {
+    if (length(start)!=3)  stop(paste("length of start must be 3 under a logistic model", "\n", ""))
+    }
+  if (Model=="step")  {
+    if (length(start)!=3)  stop(paste("length of start must be 3 under a piecewise constant model", "\n", ""))
+    }
+  if (Model=="pexpan") {
+    if (length(start)!=3)  stop(paste("length of start must be 3 under a piecewise expansion model", "\n", ""))
+    }
+  if (Model=="plog") {
+    if (length(start)!=3)  stop(paste("length of start must be 3 under a piecewise logistic model", "\n", ""))
+    }
+
+
   #####wash the data from the tree file#########
   phy.times=heterochronous.gp.stat (phy)
   ##################times frame given the coalesent events#############
