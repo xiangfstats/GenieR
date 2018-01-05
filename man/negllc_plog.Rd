@@ -33,4 +33,3 @@ nmkb(c(1,2,10),negllc_plog,lower=0,upper=Inf,t=x$t,A=x$A)
 \author{
 Fei Xiang (\email{xf3087@gmail.com})
 }
-

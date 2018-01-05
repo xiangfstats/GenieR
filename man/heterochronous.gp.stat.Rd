@@ -2,7 +2,7 @@
 % Please edit documentation in R/heterochronous-gp-stat.R
 \name{heterochronous.gp.stat}
 \alias{heterochronous.gp.stat}
-\title{Sort out sampling times, coalescent times and sampling lineages from a phylogenetic tree}
+\title{Extract sampling and coalescent times from a phylogenetic tree.}
 \usage{
 heterochronous.gp.stat(phy)
 }
@@ -10,22 +10,20 @@ heterochronous.gp.stat(phy)
 \item{phy}{A phylogenetic tree.}
 }
 \value{
-Sorted sampling times, coalescent times and sampling lineages.
+Sampling times and coalescent times
 }
 \description{
-\code{heterochronous.gp.stat} sorts out sampling times, coalescent times and sampling lineages from a phylogenetic tree.
+\code{heterochronous.gp.stat} extracts sampling and coalescent times from a phylogenetic tree.
 }
 \examples{
 library(ape)
 t1=rcoal(20)
 heterochronous.gp.stat(t1)
 
-
-}
-\author{
-Simon Frost (\email{sdwfrost@gmail.com})
 }
 \references{
 Palacios JA and Minin VN. Integrated nested Laplace approximation for Bayesian nonparametric phylodynamics, in Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence, 2012.
 }
-
+\author{
+Fei Xiang (\email{xf3087@gmail.com})
+}

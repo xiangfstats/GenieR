@@ -42,4 +42,3 @@ acf(f$MCMC.simulation)
 \author{
 Fei Xiang (\email{xf3087@gmail.com})
 }
-

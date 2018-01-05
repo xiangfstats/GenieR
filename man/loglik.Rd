@@ -29,4 +29,3 @@ system.time(loglik(village,c(100,1),Model="expo",Rcpp=F))
 \author{
 Fei Xiang (\email{xf3087@gmail.com})
 }
-

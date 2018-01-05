@@ -28,4 +28,3 @@ negllc_const(1, x$t, x$A)
 \author{
 Simon Frost (\email{sdwfrost@gmail.com})
 }
-

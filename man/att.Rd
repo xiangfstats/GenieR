@@ -24,10 +24,9 @@ att(t1)
 
 
 }
-\author{
-Simon Frost (\email{sdwfrost@gmail.com})
-}
 \references{
 Palacios JA and Minin VN. Integrated nested Laplace approximation for Bayesian nonparametric phylodynamics, in Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence, 2012.
 }
-
+\author{
+Simon Frost (\email{sdwfrost@gmail.com})
+}

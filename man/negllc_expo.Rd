@@ -31,4 +31,3 @@ Geniefit(t1,Model="expo",start=c(10,2),upper=Inf,lower=0)
 \author{
 Fei Xiang (\email{xf3087@gmail.com})
 }
-

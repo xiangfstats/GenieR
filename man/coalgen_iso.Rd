@@ -26,10 +26,9 @@ trajectory<-function(x)  exp(10*x)
 example_iso<-coalgen_iso(sample, trajectory)
 
 }
-\author{
-Fei Xiang (\email{xf3087@gmail.com})
-}
 \references{
 \url{https://github.com/JuliaPalacios/coalsieve}.
 }
-
+\author{
+Fei Xiang (\email{xf3087@gmail.com})
+}

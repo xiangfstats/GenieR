@@ -25,10 +25,9 @@ sample1<-cbind(c(9,1,2,1),c(0,.008,.03,.1))
 trajectory<-function(x)  exp(10*x)
 example_hetero<-coalgen_hetero(sample1, trajectory)
 }
-\author{
-Fei Xiang (\email{xf3087@gmail.com})
-}
 \references{
 \url{https://github.com/JuliaPalacios/coalsieve}.
 }
-
+\author{
+Fei Xiang (\email{xf3087@gmail.com})
+}
