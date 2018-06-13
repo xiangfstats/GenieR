@@ -2,15 +2,15 @@
 % Please edit documentation in R/heterochronous-gp-stat.R
 \name{heterochronous.gp.stat}
 \alias{heterochronous.gp.stat}
-\title{Extract sampling and coalescent times from a phylogenetic tree.}
+\title{Extraction of  sampling and coalescent times from a phylogenetic tree.}
 \usage{
 heterochronous.gp.stat(phy)
 }
 \arguments{
-\item{phy}{A phylogenetic tree.}
+\item{phy}{A phylogenetic tree, which is an object of class "phylo".}
 }
 \value{
-Sampling times and coalescent times
+Alist of sampling times, coalescent times, total linages.
 }
 \description{
 \code{heterochronous.gp.stat} extracts sampling and coalescent times from a phylogenetic tree.

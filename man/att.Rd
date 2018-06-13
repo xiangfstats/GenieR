@@ -2,20 +2,20 @@
 % Please edit documentation in R/att.R
 \name{att}
 \alias{att}
-\title{Sort out sampling times, coalescent times and sampling lineages from a phylogenetic tree}
+\title{Extraction of  sorted sampling/coalescent times and sampling/coalescent lineages from a phylogenetic tree.}
 \usage{
 att(phy, eps = 1e-06)
 }
 \arguments{
-\item{phy}{A phylogenetic tree.}
+\item{phy}{A phylogenetic tree, which is an object of class "phylo".}
 
-\item{eps}{Difference parameter to separate coalescent and sampling event.}
+\item{eps}{Threshold parameter to separate coalescent and sampling event.}
 }
 \value{
-Sorted sampling times, coalescent times and sampling lineages.
+A data.frame with columns t containing event times and A giving lineages.
 }
 \description{
-\code{att} sorts out sampling times, coalescent times and sampling lineages from a phylogenetic tree.
+\code{att} extract sorted sampling/coalescent times and sampling/coalescent lineages from a phylogenetic tree.
 }
 \examples{
 library(ape)
