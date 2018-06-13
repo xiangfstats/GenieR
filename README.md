@@ -14,7 +14,7 @@ To install the devel version of the package, type:
 devtools::install_github("xiangfstats/genieR")
 ```
 
-Note that this requires the package *devtools* installed.
+Note that this requires the package *devtools* installed and a Rtools installation is necessary to build this package for the benefit of Windows users.
 
 ### Contributors (by alphabetic order):
 
