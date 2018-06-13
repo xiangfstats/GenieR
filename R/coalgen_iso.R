@@ -1,13 +1,13 @@
-#' Simulate coalescent times for isochronous data.
+#' Simulation of  coalescent times for isochronous data.
 #'
-#' \code{coalgen_iso} simulates coalescent times for isochronous data.
+#' \code{coalgen.iso} simulates coalescent times for isochronous data.
 #'
 #' @param sample A two dimensional vector of number of individuals and the initial time.
 #' @param trajectory A population growth function.
 #' @param val_upper Upper end of time points to be simulated.
 #'
 #'
-#' @return Coalescent intervals and lineages.
+#' @return A data.frame with columns t containing event times and A giving lineages.
 #'
 #' @references \url{https://github.com/JuliaPalacios/coalsieve}.
 #'
@@ -17,12 +17,12 @@
 #' sample<-c(100,0)
 #'
 #' trajectory<-function(x)  exp(10*x)
-#' example_iso<-coalgen_iso(sample, trajectory)
+#' example.iso<-coalgen.iso(sample, trajectory)
 #'
 #'@author Fei Xiang (\email{xf3087@@gmail.com})
 #'
 #'
-coalgen_iso<-function(sample, trajectory,val_upper=10){
+coalgen.iso<-function(sample, trajectory,val_upper=10){
   # sample = is a matrix with 2 columns. The first column contains the number of samples collected at the time defined in the second column
   # trajectory = one over the effective population size function
   # this works for isochronous sampling
@@ -41,7 +41,8 @@ coalgen_iso<-function(sample, trajectory,val_upper=10){
     s<-s+y
     out[n-j+1]<-s
   }
-  return(list(branches=c(out[1],diff(out)),lineages=seq(n,2,-1)))
+  data.frame(t=c(out[1],diff(out)),A=seq(n,2,-1))
+  #return(list(branches=c(out[1],diff(out)),lineages=seq(n,2,-1)))
 
 }
 

@@ -1,13 +1,13 @@
-#' Simulate coalescent times for heterochronous data.
+#' Simulation of coalescent times for heterochronous data.
 #'
-#' \code{coalgen_hetero} simulates coalescent times for heterochronous data.
+#' \code{coalgen.hetero} simulates coalescent times for heterochronous data.
 #'
 #' @param sample A two columns matrix of number of individuals and the initial time.
 #' @param trajectory A population growth function.
 #' @param val_upper Upper end of time points to be simulated.
 #'
 #'
-#' @return Coalescent intervals and lineages.
+#' @return A data.frame with columns t containing event times and A giving lineages.
 #'
 #' @references \url{https://github.com/JuliaPalacios/coalsieve}.
 #'
@@ -17,14 +17,14 @@
 #' sample1<-cbind(c(9,1,2,1),c(0,.008,.03,.1))
 #'
 #' trajectory<-function(x)  exp(10*x)
-#' example_hetero<-coalgen_hetero(sample1, trajectory)
+#' example.hetero<-coalgen.hetero(sample1, trajectory)
 #'@author Fei Xiang (\email{xf3087@@gmail.com})
 #'
 #'@export
 #'
 #'
 #'
-coalgen_hetero <-function(sample, trajectory,val_upper=10){
+coalgen.hetero <-function(sample, trajectory,val_upper=10){
   # sample = is a matrix with 2 columns. The first column contains the number of samples collected at the time defined in the second column
   # trajectory = one over the effective population size function
   # this works for heterochronous sampling
@@ -68,6 +68,6 @@ coalgen_hetero <-function(sample, trajectory,val_upper=10){
     if (i==nsample) {sample[nsample+1,2]<-10*(s+y)}
 
   }
-
-  return(list(branches=c(out[1],diff(out)),lineages=branches))
+  data.frame(t=c(out[1],diff(out)),A=branches)
+  #return(list(branches=c(out[1],diff(out)),lineages=branches))
 }

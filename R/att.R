@@ -1,11 +1,11 @@
-#'Sort out sampling times, coalescent times and sampling lineages from a phylogenetic tree
+#' Extraction of  sorted sampling/coalescent times and sampling/coalescent lineages from a phylogenetic tree.
 #'
-##' \code{att} sorts out sampling times, coalescent times and sampling lineages from a phylogenetic tree.
+##' \code{att} extract sorted sampling/coalescent times and sampling/coalescent lineages from a phylogenetic tree.
 ##'
-##' @param phy A phylogenetic tree.
-##' @param eps Difference parameter to separate coalescent and sampling event.
+##' @param phy A phylogenetic tree, which is an object of class "phylo".
+##' @param eps Threshold parameter to separate coalescent and sampling event.
 ##'
-##' @return Sorted sampling times, coalescent times and sampling lineages.
+##' @return A data.frame with columns t containing event times and A giving lineages.
 ##'
 ##' @references Palacios JA and Minin VN. Integrated nested Laplace approximation for Bayesian nonparametric phylodynamics, in Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence, 2012.
 ##' @examples

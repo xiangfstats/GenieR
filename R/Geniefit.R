@@ -1,23 +1,40 @@
 #' A function to fit coalescent models to a given phylogenetic tree.
-#' @param phy A phylogenetic tree.
-#' @param Model A Model choice from const (constant population size), expo (exponetial growth),expan (expansion growth), log (logistic growth), step (piecewise constant), pexpan (piecewise expansion growth) and plog (piecewise logistic growth).
-#' @param start Initial values for the parameters to be optimized over.
-#' @param lower, upper Bounds on the variables.
+#' @description This function fits a user chosen coalescent model to fit a given phylogenetic tree by maximum likelihood estimation or Markov Chain Monte Carlo (MCMC) inference.
+#'
+#' Coalescent theory describes the mathematical properties
+#' of intra-population phylogenies (Kingman (1982)). Griffiths and Tavare (1994) suggests a particular coalescent model,
+#' which describes how the shape of the genealogy depends on the demograhic history of the sampled population. It provides
+#' a probability distribution for the waiting times between coalescent events in a genealogy. This distribution depends on
+#' the  demographic function N_e(t), which is the effective population size at time t before present. Pybus and Rambaut (2002)
+#' represents the demographic function  using simple mathematical functions that characterize biologically plausible population
+#' dynamic histories, such as constant, exponential, logistic, expension, piecewise constant, piecewise expansion,
+#' and piecewise logistic growth.
+#'
+#' @param phy A phylogenetic tree, which is an object of class "phylo".
+#' @param Model A model choice from const (constant population size), expo (exponetial growth),expan (expansion growth), log (logistic growth), step (piecewise constant), pexpan (piecewise expansion growth) and plog (piecewise logistic growth).
+#' @param start A numeric vector of starting estimates of the parameters of the coalescent model.
+#' @param lower A numeric vector of lower bounds on the parameters. If the length is 1 the single lower bound is applied to all parameters.
+#' @param upper A numeric vector of upper bounds on the parameters. If the length is 1 the single upper bound is applied to all parameters.
 #' @param Rcpp Calculation is based on C++ code when it is True and on R code when it is False.
 #' @param MCMC MCMC simulation is run when it is true, and not run when it is False. The default prior is uniform given the lower and upper.
 #' @param sig MCMC simulation step size.
 #' @param run Number of MCMC simulation.
-#' @return Parameters estimation of a given model, loglikelihood and AIC
+#' @return Parameters estimation of a given model, loglikelihood and AIC, when MCMC=F and additional MCMC simulations for parameters and loglikelihood will be presented when MCMC=T.
 #' @examples
 #' library(ape)
 #' t1=rcoal(20)
-#' Geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0)
-#' Geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0,Rcpp=T)
+#' geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0)
+#' geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0,Rcpp=T)
 #' ###a MCMC simulation included##
-#' f=Geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0,MCMC=T,sig=.1,run=10000)
+#' f=geniefit(t1,Model="expo",start=c(100,.1),upper=Inf,lower=0,MCMC=T,sig=.1,run=10000)
 #' acf(f$MCMC.simulation)
 #' @author Fei Xiang (\email{xf3087@@gmail.com})
+#' @references
+#' Kingman, J. F. C. (1982). On the Genealogy of Large Populations. Journal of Applied Probability 19, 27-43.
 #'
+#' Griffiths, R., and Tavare, S. (1994). Sampling Theory for Neutral Alleles in a Varying Environment. Philosophical Transactions: Biological Sciences, 344(1310), 403-410.
+#'
+#' Pybus, O. G., and Rambaut, A. (2002). GENIE: Estimating Demographic History from Molecular Phylogenies. Bioinformatics 18, 1404-1405.
 #' @export
 #'
 #'
@@ -26,7 +43,7 @@
 
 
 
-Geniefit=function(phy,Model,start,upper,lower,Rcpp=F,MCMC=F,sig=.1,run=10000){
+geniefit=function(phy,Model,start,upper,lower,Rcpp=F,MCMC=F,sig=.1,run=10000){
   ###
 
   ###stops if number of parameters are not correct according to Model
@@ -122,7 +139,7 @@ Geniefit=function(phy,Model,start,upper,lower,Rcpp=F,MCMC=F,sig=.1,run=10000){
   require(minqa)
   fit2 <- bobyqa(log(start),fn2,lower=log(lower),upper=log(upper))
   if (MCMC==T){
-    mcmcsim=MCMCupdates(phy=phy,Model=Model,start=start,lower=lower,upper=upper,sig=sig,run=run)
+    mcmcsim=MCMC.updates(phy=phy,Model=Model,start=start,lower=lower,upper=upper,sig=sig,run=run)
     return(list(parr=exp(fit2$par),loglikelihood=-fit2$fval,AIC=2*length(start)+2*fit2$fval,MCMC.simulation=mcmcsim))
   } else{
     return(list(parr=exp(fit2$par),loglikelihood=-fit2$fval,AIC=2*length(start)+2*fit2$fval))
@@ -143,7 +160,7 @@ Geniefit=function(phy,Model,start,upper,lower,Rcpp=F,MCMC=F,sig=.1,run=10000){
   if (Model=="plog")   fit.c=nmkb(start,negllc_plog,t=x$t,A=x$A,upper = upper,lower = lower)
 
   if (MCMC==T){
-    mcmcsim=MCMCupdates(phy=phy,Model=Model,start=start,lower=lower,upper=upper,sig=sig,run=run)
+    mcmcsim=MCMC.updates(phy=phy,Model=Model,start=start,lower=lower,upper=upper,sig=sig,run=run)
     return(list(parr=fit.c$par,loglikelihood=ifelse(Model=="const",-fit.c$fval,-fit.c$value),AIC=2*length(start)-2*ifelse(Model=="const",-fit.c$fval,-fit.c$value),MCMC.simulation=mcmcsim))
   } else{
     return(list(parr=fit.c$par,loglikelihood=ifelse(Model=="const",-fit.c$fval,-fit.c$value),AIC=2*length(start)-2*ifelse(Model=="const",-fit.c$fval,-fit.c$value)))

@@ -501,7 +501,7 @@ MCMC_plog=function(phy,start,lower,upper,sig,run){
 }
 
 #####overall function#####
-MCMCupdates=function(phy,Model,start,lower,upper,sig,run){
+MCMC.updates=function(phy,Model,start,lower,upper,sig,run){
   if (Model=="const") fmc=MCMC_const(phy=phy,start=start,lower=lower,upper=upper,sig=sig,run=run)
   if (Model=="expo")  fmc=MCMC_expo(phy=phy,start=start,lower=lower,upper=upper,sig=sig,run=run)
   if (Model=="log")   fmc=MCMC_log(phy=phy,start=start,lower=lower,upper=upper,sig=sig,run=run)

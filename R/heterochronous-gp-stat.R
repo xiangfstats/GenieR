@@ -1,11 +1,11 @@
-#' Extract sampling and coalescent times from a phylogenetic tree.
+#' Extraction of  sampling and coalescent times from a phylogenetic tree.
 #'
 #' \code{heterochronous.gp.stat} extracts sampling and coalescent times from a phylogenetic tree.
 #'
-#' @param phy A phylogenetic tree.
+#' @param phy A phylogenetic tree, which is an object of class "phylo".
 #'
 #'
-#' @return Sampling times and coalescent times
+#' @return Alist of sampling times, coalescent times, total linages.
 #'
 #' @references Palacios JA and Minin VN. Integrated nested Laplace approximation for Bayesian nonparametric phylodynamics, in Proceedings of the Twenty-Eighth Conference on Uncertainty in Artificial Intelligence, 2012.
 #'
